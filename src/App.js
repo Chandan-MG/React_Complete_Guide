@@ -2,6 +2,11 @@
 import './App.css';
 import React, { useCallback, useEffect, useState } from 'react';
 import MovieList from './Components/MovieList';
+import MovieInput from './Components/MovieInput/MovieInput';
+
+import '../node_modules/react-bootstrap/dist/react-bootstrap.js';
+import '../node_modules/bootstrap/dist/css/bootstrap.css';
+import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
   const [movies, setMovies] = useState([]);
@@ -44,6 +49,9 @@ function App() {
 
   return (
     <React.Fragment>
+      <section>
+        <MovieInput />
+      </section>
       <section>
         <button onClick={fetchMoviesHandler}>Fetch Movies</button>
       </section>
