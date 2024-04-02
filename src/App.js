@@ -4,7 +4,8 @@ import React, { useCallback, useEffect, useState } from 'react';
 import MovieList from './Components/MovieList';
 import MovieInput from './Components/MovieInput/MovieInput';
 
-import '../node_modules/react-bootstrap/dist/react-bootstrap.js';
+// import '../node_modules/react-bootstrap/dist/react-bootstrap';
+
 import '../node_modules/bootstrap/dist/css/bootstrap.css';
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 
@@ -19,23 +20,24 @@ function App() {
     setIsLoading(true);
     seterror(null);
     try{
-      const response = await fetch('https://swapi.dev/api/films/');
+      const response = await fetch('https://react-complete-guide-715a3-default-rtdb.firebaseio.com/movies.json');
       if(!response.ok){
         throw new Error("Something went wrong ....Retrying")
       }
       const data = await response.json();
 
+      const LoadedMovies = [];
+
+      for(const key in data){
+        LoadedMovies.push({
+          id: key,
+          title: data[key].title,
+          openingText: data[key].opening_crawl,
+          releaseDate: data[key].date
+        })
+      }
       
-      
-      const transformMovies = data.results.map(moviedata =>{
-          return{
-            id: moviedata.episode_id,
-            title: moviedata.title,
-            releaseDate: moviedata.release_date,
-            openingText: moviedata.opening_crawl
-          }
-      })
-      setMovies(transformMovies);
+      setMovies(LoadedMovies);
       
     }catch(error){
       seterror(error.message);
